@@ -54,7 +54,7 @@ export default function useAlertScheduler() {
         disparaNotificacao();
         notificacoesInterval();
       }
-    }, 1800000); // 30 minutos
+    }, 30000); // 30 segundos
   }
 
   function blockNotificacao() {
