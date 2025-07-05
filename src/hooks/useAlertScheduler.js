@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import respiracao from './../assets/images/respiracao.png';
 import alongamento from './../assets/images/alongamento.png';
 import pausa from './../assets/images/pausa.png';

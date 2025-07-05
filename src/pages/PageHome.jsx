@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { FaWater } from 'react-icons/fa';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import respiracao from './../assets/images/respiracao.png';
 import alongamento from './../assets/images/alongamento.png';
@@ -78,7 +77,7 @@ const PageHome = ({ user }) => {
     <div className="p-8 bg-gray-50 min-h-screen space-y-8">
       <div>
         <h1 className="text-3xl font-bold text-gray-800">
-          Olá, <span className="text-indigo-600">{user?.username || 'usuário'}</span> 👋
+          Olá, <span className="text-indigo-600">{user?.username || 'usuário'}</span>
         </h1>
         <p className="text-gray-500">Vamos cuidar da sua saúde hoje?</p>
       </div>
@@ -143,7 +142,7 @@ const PageHome = ({ user }) => {
             </h2>
             <button
               onClick={() => setHabitoSelecionado(null)}
-              className="text-sm text-gray-500 hover:underline"
+              className="text-sm text-gray-500 cursor-pointer hover:underline"
             >
               Fechar
             </button>
