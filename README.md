@@ -1,12 +1,4 @@
-# React + Vite
+# ReLembre
+O sistema ReLembre funciona como uma ferramenta de apoio à rotina do usuário, com login, cadastro da meta diária de consumo de água e envio de alertas automáticos para pausas, alongamentos, hidratação e outras ações que promovem uma rotina mais saudável. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Inicialmente a cada 30 minutos o usuário recebe uma notificação que com uma indicação de atividade que irá tornar seu dia mais leve e saudável.
