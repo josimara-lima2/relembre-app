@@ -1,51 +1,105 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import respiracao from './../assets/images/respiracao.png';
 import alongamento from './../assets/images/alongamento.png';
 import pausa from './../assets/images/pausa.png';
 import postura from './../assets/images/postura.png';
-import andando from './../assets/images/andando.png';
-import salada from './../assets/images/salada.png';
+import desconectar from './../assets/images/andando.png';
+import alimentacao from './../assets/images/salada.png';
 import agua from './../assets/images/agua.png';
-
+import { fetchAuthSession } from '@aws-amplify/auth';
+import axios from 'axios';
 let notificacaoBlock = false;
 
 export default function useAlertScheduler() {
   const timeoutRef = useRef(null);
-  const lastHabitIndexRef = useRef(null);
+  const meta = useRef(2000)
 
-  const habitos = [
-    { key: 'pausa', title: 'Pausa Ativa', img: pausa, body: 'Levante-se e caminhe por 5 minutos' },
-    { key: 'alongamento', title: 'Alongamento', img: alongamento, body: 'Estique os braços e as pernas' },
-    { key: 'respiracao', title: 'Respiração', img: respiracao, body: 'Respire profundamente por 5 vezes' },
-    { key: 'postura', title: 'Postura', img: postura, body: 'Ajuste sua cadeira e tela' },
-    { key: 'desconectar', title: 'Desconectar', img: andando, body: 'Desconecte-se por 5 minutos' },
-    { key: 'alimentacao', title: 'Alimentação', img: salada, body: 'Coma um lanche saudável' },
-    { key: 'agua', title: 'Água', img: agua, body: 'Beba um copo de água' }
-  ];
+  const buscarMetaAgua = async () => {
+  try {
+    const session = await fetchAuthSession();
+    const idToken = session.tokens?.idToken?.toString();
 
-  function getRandomHabitIndex() {
-    let idx;
-    do {
-      idx = Math.floor(Math.random() * habitos.length);
-    } while (habitos.length > 1 && idx === lastHabitIndexRef.current);
-    lastHabitIndexRef.current = idx;
-    return idx;
+    const { data } = await axios.get(
+      'https://7oyg2tk4qa.execute-api.us-east-1.amazonaws.com/v1/meta-agua/',
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    );
+
+    console.log('Meta atual:', data.metaAgua);
+    return data.metaAgua;
+  } catch (err) {
+    console.error('Erro ao buscar meta de água:', err);
+    return null;
   }
+};
 
-  function disparaNotificacao() {
+useEffect(() => {
+    const metaAgua = async () => {
+      try {
+        meta.current = await buscarMetaAgua();
+        if (meta.current) {
+          console.log('Meta de água atual:', meta.current);
+        }
+      } catch (err) {
+        console.error('Erro ao buscar meta de água:', err);
+      }
+    };
+
+    metaAgua();
+  }, []); 
+
+  const imagesHabitos = {
+    pausa, alongamento, respiracao, postura, desconectar, alimentacao, agua
+  };
+
+
+  const handleHabito = async () => {
+    try {
+      const session = await fetchAuthSession();
+      const idToken = session.tokens?.idToken?.toString();
+
+      const res = await axios.post(
+        "https://7oyg2tk4qa.execute-api.us-east-1.amazonaws.com/v1/alert",
+        {}, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+      );
+      console.log('Resposta da API:', res.data);
+      return res.data[0] || null
+    } catch (error) {
+      console.error('Erro na chamada autenticada:', error);
+    }
+  };
+
+  
+  async function disparaNotificacao() {
     if (Notification.permission !== 'granted') return;
     if (notificacaoBlock) return;
 
-    const habit = habitos[getRandomHabitIndex()];
+    const habit = await handleHabito();
+    console.log('Disparando notificação:', habit);
+    if (!habit) return;
+    const corpo = habit.key.startsWith('agua')
+      ? `${habit.body}! Sua Meta é: ${meta.current || '2000'} ml`
+      : habit.body;
+    const keyPrefix = habit.key.split('_')[0];
+    const iconImg = imagesHabitos[keyPrefix] || imagesHabitos[habit.key];
+
+
     new Notification(habit.title, {
-      body: habit.body,
-      icon: habit.img,
+      body: corpo,
+      icon: iconImg,
       tag: habit.key,
       silent: false,
       renotify: true,
     });
-  }
-
+  };
   function notificacoesInterval() {
     clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
