@@ -5,6 +5,7 @@ import axios from 'axios';
 
 export default function MetaAgua() {
   const [metaAgua, setMetaAgua] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     buscarMetaAgua().then(setMetaAgua);
@@ -35,6 +36,7 @@ export default function MetaAgua() {
 
   const salvarMetaAgua = async (novaMeta) => {
     try {
+      setIsLoading(true);
       const session = await fetchAuthSession();
       const idToken = session.tokens?.idToken?.toString();
 
@@ -59,6 +61,8 @@ export default function MetaAgua() {
       toast.error('Erro ao salvar meta de água', {
         position: "top-right"
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -76,8 +80,9 @@ export default function MetaAgua() {
       />
 
       <button
+        disabled={isLoading}
+        className={`mt-4 px-6 py-2 ${isLoading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'} max-w-min text-white font-semibold rounded shadow transition-colors duration-200`}
         onClick={() => salvarMetaAgua(metaAgua)}
-        className="mt-4 px-6 py-2 bg-blue-600 max-w-min hover:bg-blue-700 text-white font-semibold rounded shadow transition-colors duration-200"
       >
         Salvar
       </button>
