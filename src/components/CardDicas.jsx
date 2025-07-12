@@ -48,7 +48,7 @@ export default function CardDicas({
         : [];
 
     return (
-        <div  className="bg-white border border-indigo-100 rounded-2xl p-6 shadow-md">
+        <div  className="bg-white md:col-span-2 border border-indigo-100 rounded-2xl p-6 shadow-md">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold text-indigo-600">
                     Ideias para: {titulo}

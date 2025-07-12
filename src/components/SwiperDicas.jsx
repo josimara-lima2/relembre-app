@@ -2,7 +2,7 @@ import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import clsx from 'clsx';
 export default function SwiperDicas({ dicasSaude, setDicaIndex, dicaIndex }) {
     return (
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm px-6 py-6 flex flex-col relative min-h-[200px]">
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm px-6 py-6 flex flex-col relative min-h-[150px]">
             <p className="text-purple-700 font-medium text-lg text-center my-auto flex items-center justify-center">
                 {dicasSaude[dicaIndex]}
             </p>

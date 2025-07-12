@@ -108,7 +108,7 @@ useEffect(() => {
         disparaNotificacao();
         notificacoesInterval();
       }
-    }, 30000); // 30 segundos
+    }, 3000000); // 30 segundos
   }
 
   function blockNotificacao() {

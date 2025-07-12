@@ -1,35 +1,36 @@
+import { ToastContainer, toast } from 'react-toastify';
 import React, { useState, useEffect } from 'react';
 import { fetchAuthSession } from '@aws-amplify/auth';
 import axios from 'axios';
 
 export default function MetaAgua() {
-  const [metaAgua, setMetaAgua] = useState(2000);
+  const [metaAgua, setMetaAgua] = useState("");
 
   useEffect(() => {
     buscarMetaAgua().then(setMetaAgua);
   }, []);
 
   const buscarMetaAgua = async () => {
-  try {
-    const session = await fetchAuthSession();
-    const idToken = session.tokens?.idToken?.toString();
+    try {
+      const session = await fetchAuthSession();
+      const idToken = session.tokens?.idToken?.toString();
 
-    const { data } = await axios.get(
-      'https://7oyg2tk4qa.execute-api.us-east-1.amazonaws.com/v1/meta-agua/',
-      {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-      }
-    );
+      const { data } = await axios.get(
+        'https://7oyg2tk4qa.execute-api.us-east-1.amazonaws.com/v1/meta-agua/',
+        {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        }
+      );
 
-    console.log('Meta atual:', data.metaAgua);
-    return data.metaAgua;
-  } catch (err) {
-    console.error('Erro ao buscar meta de água:', err);
-    return null;
-  }
-};
+      console.log('Meta atual:', data.metaAgua);
+      return data.metaAgua;
+    } catch (err) {
+      console.error('Erro ao buscar meta de água:', err);
+      return null;
+    }
+  };
 
 
   const salvarMetaAgua = async (novaMeta) => {
@@ -47,10 +48,17 @@ export default function MetaAgua() {
         }
       );
 
-      alert(response.data.message);
+
+      const notify = () => toast('Meta de água salva com sucesso!', {
+        position: "top-right"
+      });
+
+      notify();
     } catch (err) {
       console.error('Erro ao salvar meta:', err);
-      alert('Erro ao salvar meta de água');
+      toast.error('Erro ao salvar meta de água', {
+        position: "top-right"
+      });
     }
   };
 
@@ -64,7 +72,7 @@ export default function MetaAgua() {
         placeholder="Ex: 2000 ml"
         className="border border-gray-300 outline-none p-2 rounded w-48"
         value={metaAgua}
-        onChange={(e) => setMetaAgua(parseInt(e.target.value) || 0)}
+        onChange={(e) => setMetaAgua(parseInt(e.target.value))}
       />
 
       <button
@@ -73,6 +81,7 @@ export default function MetaAgua() {
       >
         Salvar
       </button>
+      <ToastContainer />
     </div>
   );
 }

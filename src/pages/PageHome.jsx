@@ -108,7 +108,7 @@ const PageHome = ({ user }) => {
         <p className="text-gray-500">Vamos cuidar da sua saúde hoje?</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 flex items-center gap-4">
           <img src={agua} alt="Ícone de água" className='w-16 h-16' />
           <div>
