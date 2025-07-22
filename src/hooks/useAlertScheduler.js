@@ -20,7 +20,7 @@ export default function useAlertScheduler() {
     const idToken = session.tokens?.idToken?.toString();
 
     const { data } = await axios.get(
-      'https://7oyg2tk4qa.execute-api.us-east-1.amazonaws.com/v1/meta-agua/',
+      `${import.meta.env.VITE_URL_API}meta-agua/`,
       {
         headers: {
           Authorization: `Bearer ${idToken}`,
@@ -62,7 +62,7 @@ useEffect(() => {
       const idToken = session.tokens?.idToken?.toString();
 
       const res = await axios.post(
-        "https://7oyg2tk4qa.execute-api.us-east-1.amazonaws.com/v1/alert",
+        `${import.meta.env.VITE_URL_API}alert`,
         {}, {
         headers: {
           'Content-Type': 'application/json',
@@ -108,6 +108,7 @@ useEffect(() => {
         disparaNotificacao();
         notificacoesInterval();
       }
+      // 1800000 - 30 minutos
     }, 30000); // 30 segundos
   }
 

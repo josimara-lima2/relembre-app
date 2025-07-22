@@ -16,7 +16,7 @@ function App() {
   }, []);
   
   return (
-    <Authenticator  loginMechanisms={[ 'email']} // permite login por nome de usuário ou email
+    <Authenticator  loginMechanisms={[ 'email']} 
 >
       {({ signOut, user }) => (
         <Router>

@@ -17,7 +17,7 @@ export default function MetaAgua() {
       const idToken = session.tokens?.idToken?.toString();
 
       const { data } = await axios.get(
-        'https://7oyg2tk4qa.execute-api.us-east-1.amazonaws.com/v1/meta-agua/',
+        `${import.meta.env.VITE_URL_API}meta-agua/`,
         {
           headers: {
             Authorization: `Bearer ${idToken}`,
@@ -41,7 +41,7 @@ export default function MetaAgua() {
       const idToken = session.tokens?.idToken?.toString();
 
       const response = await axios.post(
-        'https://7oyg2tk4qa.execute-api.us-east-1.amazonaws.com/v1/meta-agua',
+        `${import.meta.env.VITE_URL_API}meta-agua`,
         { metaAgua: novaMeta },
         {
           headers: {

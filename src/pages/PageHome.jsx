@@ -29,45 +29,11 @@ const habitos = [
   { key: 'alimentacao', title: 'Alimentação', img: salada }
 ];
 
-// const ideiasPorHabito = {
-//   pausa: [
-//     'Levante-se e caminhe por 5 minutos',
-//     'Dance ao som de uma música animada',
-//     'Olhe pela janela e respire fundo'
-//   ],
-//   alongamento: [
-//     'Estique os braços para cima e respire',
-//     'Gire os ombros 10 vezes',
-//     'Alongue o pescoço suavemente para os lados'
-//   ],
-//   respiracao: [
-//     'Inspire por 4s, segure 4s, expire 4s (respiração quadrada)',
-//     'Feche os olhos e concentre-se em 5 respirações profundas',
-//     'Use um app de respiração guiada por 1 minuto'
-//   ],
-//   postura: [
-//     'Ajuste a altura da tela na linha dos olhos',
-//     'Mantenha os pés apoiados no chão',
-//     'Evite curvar os ombros para frente'
-//   ],
-//   desconectar: [
-//     'Feche os olhos por 1 minuto',
-//     'Tire 3 minutos para pensar em algo positivo',
-//     'Desligue notificações por 15 minutos'
-//   ],
-//   alimentacao: [
-//     'Prepare um lanche saudável com frutas',
-//     'Evite comidas pesadas durante o expediente',
-//     'Beba um chá calmante entre tarefas'
-//   ]
-// };
 
 const PageHome = ({ user }) => {
   const [metaAgua, setMetaAgua] = useState(0);
   const [dicaIndex, setDicaIndex] = useState(0);
   const [habitoSelecionado, setHabitoSelecionado] = useState(null);
-
-  
 
 
   useEffect(() => {
@@ -77,7 +43,7 @@ const PageHome = ({ user }) => {
         const idToken = session.tokens?.idToken?.toString();
 
         const { data } = await axios.get(
-          'https://7oyg2tk4qa.execute-api.us-east-1.amazonaws.com/v1/meta-agua/',
+          `${import.meta.env.VITE_URL_API}meta-agua/`,
           {
             headers: {
               Authorization: `Bearer ${idToken}`,
